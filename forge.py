@@ -10,6 +10,7 @@ from collections import deque
 from tornado.web import HTTPError
 from tempfile import NamedTemporaryFile
 
+
 @gen.coroutine
 def get_font(application, font_url):
     font_response = yield application.client.fetch(font_url)
