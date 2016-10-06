@@ -38,7 +38,8 @@ def compress(application, text, font_url):
 
         font.removeGlyph(i)
 
-    temp_filename = os.path.join('/tmp', uuid.uuid4())
+    temp_filename = os.path.join('/tmp', str(uuid.uuid4()) + '.woff')
+
     font.generate(temp_filename)
     with open(temp_filename, 'r') as read_font:
         b64_font = base64.b64encode(read_font.read())
