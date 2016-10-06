@@ -19,6 +19,6 @@ if __name__ == "__main__":
     )
     app.client = tornado.httpclient.AsyncHTTPClient()
     server = HTTPServer(app)
-    server.bind(int(environ.get('port', 8888)), environ.get('ip', '0.0.0.0'))
+    server.bind(int(environ.get('PORT', 8888)))
     server.start()
     tornado.ioloop.IOLoop.current().start()
