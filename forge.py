@@ -1,8 +1,10 @@
 #!/usr/bin/python2
-import fontforge
+import os
+import uuid
 import base64
+
+import fontforge
 import tornado.gen as gen
-import cStringIO
 
 from collections import deque
 from tornado.web import HTTPError
@@ -27,7 +29,7 @@ def compress(application, text, font_url):
         input_font.flush()
         font = fontforge.open(input_font.name)
 
-    for i in set([i.lower() for i in deque(text.decode("UTF-8"))]):
+    for i in set([i for i in deque(text.decode("UTF-8"))]):
         font.selection[ord(i)] = True
 
     font.selection.invert()
@@ -36,10 +38,10 @@ def compress(application, text, font_url):
 
         font.removeGlyph(i)
 
-    with NamedTemporaryFile() as output_font:
-        font.generate(output_font.name)
-        output_font.flush()
-        with open(output_font.name, 'r') as font:
-            b64_font = base64.b64encode(font.read())
+    temp_filename = os.path.join('/tmp', uuid.uuid4())
+    font.generate(temp_filename)
+    with open(temp_filename, 'r') as read_font:
+        b64_font = base64.b64encode(read_font.read())
+    os.remove(temp_filename)
 
     raise gen.Return(b64_font)
