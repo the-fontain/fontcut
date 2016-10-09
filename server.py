@@ -1,10 +1,12 @@
+#!/usr/bin/env python
+
 import tornado.ioloop
 import tornado.web
 import tornado.httpclient
 
 from tornado.httpserver import HTTPServer
 from os import environ
-from handler import MainHandler
+from fontcut.handler import MainHandler
 
 
 def make_app():

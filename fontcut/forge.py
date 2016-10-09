@@ -1,4 +1,3 @@
-#!/usr/bin/python2
 import os
 import uuid
 import base64
@@ -24,7 +23,6 @@ def compress(application, text, font_url):
         font_response = yield get_font(application, font_url)
     except HTTPError as e:
         raise e
-
     extension = font_url.split('.')[-1]
 
     with tempfile.NamedTemporaryFile() as input_font:
