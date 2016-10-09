@@ -5,10 +5,10 @@ import base64
 
 import fontforge
 import tornado.gen as gen
+import tempfile
 
 from collections import deque
 from tornado.web import HTTPError
-from tempfile import NamedTemporaryFile
 
 
 @gen.coroutine
@@ -25,7 +25,9 @@ def compress(application, text, font_url):
     except HTTPError as e:
         raise e
 
-    with NamedTemporaryFile() as input_font:
+    extension = font_url.split('.')[-1]
+
+    with tempfile.NamedTemporaryFile() as input_font:
         input_font.write(font_response.body)
         input_font.flush()
         font = fontforge.open(input_font.name)
@@ -39,7 +41,7 @@ def compress(application, text, font_url):
 
         font.removeGlyph(i)
 
-    temp_filename = os.path.join('/tmp', str(uuid.uuid4()) + '.woff')
+    temp_filename = os.path.join(tempfile.gettempdir(), str(uuid.uuid4()) + '.' + extension)
 
     font.generate(temp_filename)
     with open(temp_filename, 'r') as read_font:
