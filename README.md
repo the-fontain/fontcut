@@ -38,4 +38,12 @@ export PYTHONPATH=$PYTHONPATH:/usr/lib/python2.7/dist-packages/site-packages/
 }
 ```
 
+* You can use this curl:
+
+```bash
+curl -X POST 'http://localhost:8888/' -H 'Content-Type: application/json' --data '{"text": "A", "font_url": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/fonts/fontawesome-webfont.woff"}'
+```
+
 * Now you have base64 font for letter A
+
+* Test your base64 [here](http://codepen.io/anon/pen/rrJxmq?editors=1100#0)
