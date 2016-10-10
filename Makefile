@@ -8,4 +8,4 @@ run:
 	PYTHONPATH=$(PYTHONPATH):/usr/local/Cellar/fontforge/20160404/lib/python2.7/site-packages/ python server.py
 
 test:
-	@python tests/__init__.py
+	PYTHONPATH=$(PYTHONPATH):/usr/local/Cellar/fontforge/20160404/lib/python2.7/site-packages/ nosetests

@@ -1,5 +1,6 @@
 import tornado
 import server
+import base64
 
 from tornado.concurrent import Future
 from tornado.testing import AsyncHTTPTestCase
@@ -34,5 +35,8 @@ class ForgeTestCase(AsyncHTTPTestCase):
                 fetch_mock.side_effect = lambda x: future
             b64 = yield compress(self.app, "A", font_url)
             with open('tests/data/base64') as b64_file:
-                self.assertEqual(1720, len(b64))
-                self.assertIn(b64_file.read()[900:-1], b64)
+                self.assertAlmostEqual(172, int(len(b64)/10.0))
+                try:
+                    base64.b64decode(b64_file.read())
+                except TypeError:
+                    self.fail('base64 wrong format')
